@@ -1,0 +1,187 @@
+# .file-to-pr.yml — File-to-PR upload policy
+#
+# Generated from a repository scan. Maintainers can freely edit destinations,
+# extensions, confidence, and reasons below. Parsed by parsePolicy() in the
+# File-to-PR app; consumed by suggestTargetPath() to suggest where uploads go.
+
+version: 1
+source: generated_repo_scan
+defaults:
+  normalize_new_filenames: true
+  rename_existing: false
+  overwrite_existing: false
+  confidence_threshold: medium
+  require_approval_for_gated: true
+naming:
+  lowercase_extension: true
+  spaces_to_underscores: true
+  warn_on_non_ascii: true
+categories:
+  - id: background_image
+    label: Background image
+    description: Full-scene backgrounds, scenery, location art.
+    media_type: image
+    allowed_extensions:
+      - .png
+      - .jpg
+      - .jpeg
+      - .gif
+      - .webp
+      - .svg
+      - .avif
+      - .ico
+    confidence: low
+    destinations:
+      - path: uploads/_intake/
+        tier: intake
+    fallback: uploads/_intake/
+    evidence: No directory matched "background_image"; routed to intake "uploads/_intake/".
+  - id: character_image
+    label: Character image
+    description: Characters, portraits, sprites, avatars.
+    media_type: image
+    allowed_extensions:
+      - .png
+      - .jpg
+      - .jpeg
+      - .gif
+      - .webp
+      - .svg
+      - .avif
+      - .ico
+    confidence: low
+    destinations:
+      - path: uploads/_intake/
+        tier: intake
+    fallback: uploads/_intake/
+    evidence: No directory matched "character_image"; routed to intake "uploads/_intake/".
+  - id: ui_image
+    label: UI image
+    description: Interface chrome, icons, buttons, HUD.
+    media_type: image
+    allowed_extensions:
+      - .png
+      - .jpg
+      - .jpeg
+      - .gif
+      - .webp
+      - .svg
+      - .avif
+      - .ico
+    confidence: high
+    destinations:
+      - path: src/assets/icons/
+        tier: preferred
+    fallback: uploads/_intake/
+    evidence: Matched "src/assets/icons" (1 image file(s)) by keyword "icons".
+  - id: general_image
+    label: General image
+    description: Generic images, artwork, assets.
+    media_type: image
+    allowed_extensions:
+      - .png
+      - .jpg
+      - .jpeg
+      - .gif
+      - .webp
+      - .svg
+      - .avif
+      - .ico
+    confidence: high
+    destinations:
+      - path: public/images/
+        tier: preferred
+    fallback: uploads/_intake/
+    evidence: Matched "public/images" (2 image file(s)) by keyword "images".
+  - id: sound_effect
+    label: Sound effect
+    description: Short sound effects.
+    media_type: audio
+    allowed_extensions:
+      - .mp3
+      - .wav
+      - .ogg
+      - .m4a
+      - .flac
+      - .aac
+    confidence: low
+    destinations:
+      - path: uploads/_intake/
+        tier: intake
+    fallback: uploads/_intake/
+    evidence: No directory matched "sound_effect"; routed to intake "uploads/_intake/".
+  - id: background_music
+    label: Background music
+    description: Music tracks, loops, soundtrack.
+    media_type: audio
+    allowed_extensions:
+      - .mp3
+      - .wav
+      - .ogg
+      - .m4a
+      - .flac
+      - .aac
+    confidence: high
+    destinations:
+      - path: public/audio/bgm/
+        tier: preferred
+    fallback: uploads/_intake/
+    evidence: Matched "public/audio/bgm" (1 audio file(s)) by keyword "bgm".
+  - id: video
+    label: Video
+    description: Cutscenes, clips, cinematics.
+    media_type: video
+    allowed_extensions:
+      - .mp4
+      - .mov
+      - .webm
+      - .ogv
+      - .avi
+      - .mkv
+      - .m4v
+    confidence: high
+    destinations:
+      - path: public/videos/
+        tier: preferred
+    fallback: uploads/_intake/
+    evidence: Matched "public/videos" (1 video file(s)) by keyword "videos".
+  - id: document
+    label: Document
+    description: Docs, content, data files.
+    media_type: document
+    allowed_extensions:
+      - .md
+      - .pdf
+      - .csv
+      - .json
+      - .yaml
+      - .yml
+    confidence: high
+    destinations:
+      - path: docs/
+        tier: preferred
+    fallback: uploads/_intake/
+    evidence: Matched "docs" (1 document file(s)) by keyword "docs".
+  - id: unsure
+    label: Unsure / not listed
+    description: Anything that doesn't match a category — a maintainer places it.
+    media_type: document
+    allowed_extensions: []
+    confidence: medium
+    destinations:
+      - path: uploads/_intake/
+        tier: intake
+    fallback: uploads/_intake/
+    evidence: Fallback intake bucket "uploads/_intake/" for unmatched uploads.
+blocked_paths:
+  - .git/**
+  - node_modules/**
+  - .next/**
+  - dist/**
+  - build/**
+  - coverage/**
+  - vendor/**
+  - .godot/**
+  - .import/**
+  - addons/**
+gated_paths: []
